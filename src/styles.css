@@ -103,10 +103,8 @@
   width: 100%;
   max-width: 72rem;
   padding-inline: 1.25rem;
-}
 
-@media (min-width: 768px) {
-  @utility container-page {
+  @media (min-width: 768px) {
     padding-inline: 2rem;
   }
 }
