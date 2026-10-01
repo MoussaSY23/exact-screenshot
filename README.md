@@ -11,7 +11,8 @@
 **Cours :** GET 409 - Innovation & Transformation Numérique  
 **Institution :** Swiss UMEF University Dakar  
 **Année Académique :** 2025-2026  
-**Dépôt GitHub :** [https://github.com/MoussaSY23/GET409-.git](https://github.com/MoussaSY23/GET409-.git)
+**Dépôt GitHub :** [https://github.com/MoussaSY23/stage-connect-dakar.git](https://github.com/MoussaSY23/stage-connect-dakar.git)  
+**Application Live :** [https://stage-connect-dakar.lovable.app](https://stage-connect-dakar.lovable.app)
 
 ---
 
@@ -62,9 +63,17 @@
 
 ---
 
-## 🏗️ Architecture Technique
+## 🏗️ Architecture Technique & Stack
 
-### Composants Principaux
+### Stack Technique (Lovable.dev)
+
+- **Frontend :** React.js avec Vite
+- **Styling :** Tailwind CSS
+- **Plateforme de développement :** [Lovable.dev](https://lovable.dev)
+- **Hébergement :** Lovable (https://stage-connect-dakar.lovable.app)
+- **Dépôt Git :** GitHub avec synchronisation automatique Lovable
+
+### Architecture Prévue
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -73,7 +82,7 @@
 │                                                               │
 │  ┌──────────────────┐         ┌──────────────────┐         │
 │  │  Frontend Web     │         │  Backend API      │         │
-│  │  (React/Next.js)  │◄────────┤  (Node.js/Python) │         │
+│  │  (React + Vite)   │◄────────┤  (Node.js/Python) │         │
 │  └────────┬─────────┘         └────────┬─────────┘         │
 │           │                            │                    │
 │           │                            │                    │
@@ -91,18 +100,9 @@
               └──────────────────────┘
 ```
 
-### Stack Technique
-
-- **Frontend :** React.js / Next.js avec TypeScript
-- **Backend :** Node.js (Express) ou Python (FastAPI)
-- **Base de données :** PostgreSQL ou MongoDB
-- **Agent IA :** API OpenAI GPT-4 ou modèle local (Llama)
-- **Hébergement :** OVHcloud Public Cloud
-- **Authentification :** JWT / OAuth2
-
 ### Widget Agent IA
 
-Le widget conversationnel embarqué permet :
+Le widget conversationnel embarqué permettra :
 - Dialogue naturel en français et wolof
 - Analyse des profils utilisateurs
 - Recommandation personnalisée d'offres
@@ -111,57 +111,77 @@ Le widget conversationnel embarqué permet :
 
 ---
 
-## 📁 Arborescence Prévue des Livrables
+## 📁 Structure du Projet
 
 ```
-Livrables/
+stage-connect-dakar/
 │
 ├── README.md                          # Présentation du projet (ce fichier)
-├── LIVRABLE_2.md                      # HMW, VPC, Journal de Prompts
+├── livrables/                         # Livrables académiques GET409
+│   └── LIVRABLE_2.md                  # HMW, VPC, Journal de Prompts
 │
-├── docs/                              # Documentation technique
-│   ├── architecture.md
-│   ├── api-spec.md
-│   └── prompts-engineering.md
+├── src/                               # Code source React (généré par Lovable)
+│   ├── components/
+│   ├── pages/
+│   └── styles/
 │
-├── src/                               # Code source
-│   ├── frontend/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   └── styles/
-│   ├── backend/
-│   │   ├── api/
-│   │   ├── models/
-│   │   └── services/
-│   └── ai-agent/
-│       ├── prompts/
-│       └── integration/
+├── public/                            # Assets statiques
 │
-├── tests/                             # Tests unitaires et E2E
-│   ├── frontend/
-│   └── backend/
-│
-└── deployment/                        # Configuration déploiement
-    ├── docker/
-    └── ovh-config/
+└── package.json                       # Dépendances Node.js
 ```
+
+---
+
+## 🌐 Application Live
+
+L'application est accessible en ligne : **[https://stage-connect-dakar.lovable.app](https://stage-connect-dakar.lovable.app)**
+
+### Pages de l'Application
+
+1. **Accueil** - Présentation de Solusen avec statistiques et persona Modou
+2. **Offres de Stages & Formations** - Liste d'offres certifiées avec filtres par zone et type
+3. **Contact & Orientation** - Formulaire de contact et informations Swiss UMEF Dakar
 
 ---
 
 ## 🚀 Roadmap
 
 - [x] **Phase 1 :** Conception et documentation (HMW, VPC, Prompts)
-- [ ] **Phase 2 :** Développement du MVP (Frontend + Backend)
+- [x] **Phase 2 :** Développement du MVP Frontend (React + Tailwind via Lovable)
 - [ ] **Phase 3 :** Intégration de l'Agent IA
 - [ ] **Phase 4 :** Tests et validation utilisateurs
-- [ ] **Phase 5 :** Déploiement sur OVH et lancement
+- [ ] **Phase 5 :** Déploiement backend sur OVH et lancement complet
+
+---
+
+## 🛠️ Développement avec Lovable
+
+Ce projet a été construit avec [Lovable](https://lovable.dev).
+
+Continuez le développement dans l'éditeur Lovable : [Lovable Editor](https://lovable.dev/projects/072e751a-f576-51c8-8702-ae8aec88b05c)
+
+- **Ship faster** : Décrivez ce que vous voulez construire et Lovable gère le code
+- **Stay in sync** : Chaque changement fait dans Lovable est commité directement dans ce dépôt
+- **Full ownership** : Ce code est à vous. Pushez sur `main` sur GitHub et vos changements se synchronisent dans Lovable
+
+### Développement Local
+
+Préférez travailler localement ? Vous avez besoin de Node.js et npm — [installez avec nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+
+```sh
+git clone https://github.com/MoussaSY23/stage-connect-dakar.git
+cd stage-connect-dakar
+npm i
+npm run dev
+```
 
 ---
 
 ## 📞 Contact
 
 - **Chef de Projet :** Moussa Sy
-- **Dépôt GitHub :** [https://github.com/MoussaSY23/GET409-.git](https://github.com/MoussaSY23/GET409-.git)
+- **Dépôt GitHub :** [https://github.com/MoussaSY23/stage-connect-dakar.git](https://github.com/MoussaSY23/stage-connect-dakar.git)
+- **Application Live :** [https://stage-connect-dakar.lovable.app](https://stage-connect-dakar.lovable.app)
 - **Institution :** Swiss UMEF University Dakar
 
 ---
