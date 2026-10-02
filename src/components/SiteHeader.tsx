@@ -8,6 +8,7 @@ import { useAuth, shortName } from "@/lib/auth";
 export const NAV = [
   { to: "/", label: "Accueil" },
   { to: "/offres", label: "Offres & IA" },
+  { to: "/favoris", label: "Mes Favoris" },
   { to: "/espace", label: "Mon Espace" },
   { to: "/transparence", label: "Transparence" },
 ] as const;
