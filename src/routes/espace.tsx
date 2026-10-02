@@ -104,7 +104,7 @@ function Espace() {
         </TabsContent>
 
         <TabsContent value="reco" className="mt-6 grid gap-5 md:grid-cols-2">
-          {[{ o: OFFERS[2], s: 94 }, { o: OFFERS[5], s: 88 }].map(({ o, s }) => (
+          {[{ o: OFFERS[2]!, s: 94 }, { o: OFFERS[5]!, s: 88 }].map(({ o, s }) => (
             <div key={o.id} className="rounded-2xl border border-border bg-card p-6 shadow-sm">
               <div className="flex items-center justify-between">
                 <span className="rounded-full bg-certified-soft px-3 py-1 text-xs font-bold text-certified">{s}% de compatibilité</span>

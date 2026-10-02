@@ -24,7 +24,7 @@ function LoginDialog() {
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     const local = email.split("@")[0] ?? "";
-    const parts = local.split(/[._-]/).filter(Boolean).map((p) => p[0].toUpperCase() + p.slice(1));
+    const parts = local.split(/[._-]/).filter(Boolean).map((p) => (p[0] ?? "").toUpperCase() + p.slice(1));
     const name = parts.length >= 2 ? `${parts[0]} ${parts[1]}` : "Modou Sene";
     login({ name, email, university: uni });
     setOpenLogin(false);
