@@ -16,17 +16,18 @@ export function AssistantSolusenIA() {
     setResponse("");
 
     try {
-      console.log("Envoi de la requête à Dify API...");
-      const res = await fetch("https://api.dify.ai/v1/workflows/run", {
+      console.log("Envoi de la requête à Dify API (Chatbot)...");
+      const res = await fetch("https://api.dify.ai/v1/chat-messages", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer app-X2YxY1LmzaotAoNZHmkylj6p",
         },
         body: JSON.stringify({
-          inputs: { query: query },
+          query: query,
           response_mode: "blocking",
           user: "etudiant-" + Date.now(),
+          inputs: {},
         }),
       });
 
@@ -41,8 +42,8 @@ export function AssistantSolusenIA() {
       const data = await res.json();
       console.log("Données reçues de Dify:", data);
       
-      // Extraction de la réponse selon la structure Dify
-      const answer = data.outputs?.text || data.outputs?.answer || data.data?.outputs?.text || data.data?.outputs?.result || JSON.stringify(data, null, 2);
+      // Extraction de la réponse selon la structure Chatbot Dify
+      const answer = data.answer || data.message?.content || JSON.stringify(data, null, 2);
       setResponse(answer);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Erreur inconnue";
