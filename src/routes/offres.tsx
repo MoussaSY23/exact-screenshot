@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import { Search, MapPin, Filter } from "lucide-react";
 import { AskAgent } from "@/components/AskAgent";
 import { OfferCard } from "@/components/OfferCard";
@@ -13,6 +13,8 @@ export const Route = createFileRoute("/offres")({
       { name: "description", content: "Stages, alternances et formations certifiantes à Dakar, filtrables par zone et niveau, avec un assistant IA d'orientation." },
       { property: "og:title", content: "Offres certifiées & Assistant IA — Solusen" },
       { property: "og:description", content: "Wave, GAINDÉ 2000, Sonatel, BDO… des offres vérifiées et un agent IA pour vous conseiller." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Offres,
@@ -28,22 +30,6 @@ function Offres() {
   const [zone, setZone] = useState<string>("Toutes");
   const [gratification, setGratification] = useState<string>("Tous");
   const [applying, setApplying] = useState<Offer | null>(null);
-  const [favorites, setFavorites] = useState<Set<string>>(new Set());
-
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem("solusen_favoris");
-      if (stored) setFavorites(new Set(JSON.parse(stored)));
-    } catch {}
-  }, []);
-
-  const toggleFavorite = (offerId: string) => {
-    const newFavs = new Set(favorites);
-    if (newFavs.has(offerId)) newFavs.delete(offerId);
-    else newFavs.add(offerId);
-    setFavorites(newFavs);
-    localStorage.setItem("solusen_favoris", JSON.stringify([...newFavs]));
-  };
 
   const list = useMemo(() => {
     const s = q.toLowerCase().trim();
@@ -59,10 +45,11 @@ function Offres() {
 
   return (
     <div>
-      <section className="hero-mesh border-b border-border">
+      <section className="border-b border-border bg-card">
         <div className="container-page py-10 md:py-14">
-          <h1 className="text-3xl font-bold md:text-4xl">Offres & Assistant IA</h1>
-          <p className="mt-3 max-w-2xl text-muted-foreground">Toutes les opportunités ci-dessous sont certifiées Solusen. Posez vos questions à l'agent pour être orienté.</p>
+          <span className="section-label">Catalogue certifié</span>
+          <h1 className="mt-3 text-4xl font-bold md:text-5xl">Votre prochaine opportunité commence ici</h1>
+          <p className="mt-3 max-w-2xl text-muted-foreground">Comparez des offres vérifiées, sans frais cachés, puis demandez conseil à l'Assistant IA.</p>
           <div className="mt-8"><AskAgent /></div>
         </div>
       </section>
@@ -145,8 +132,6 @@ function Offres() {
                 offer={o} 
                 action="Postuler directement" 
                 onAction={() => setApplying(o)}
-                isFavorite={favorites.has(o.id)}
-                onToggleFavorite={() => toggleFavorite(o.id)}
               />
             ))}
           </div>

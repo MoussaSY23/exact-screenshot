@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Menu, X, LogOut, LayoutDashboard } from "lucide-react";
+import { Menu, X, LogOut, LayoutDashboard, Sparkles, GraduationCap } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth, shortName } from "@/lib/auth";
+import { Button } from "@/components/ui/button";
 
 export const NAV = [
   { to: "/", label: "Accueil" },
@@ -50,7 +51,7 @@ function LoginDialog() {
               </button>
             ))}
           </div>
-          <button className="w-full rounded-xl bg-primary py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90">Se connecter</button>
+          <Button className="h-11 w-full rounded-lg">Se connecter</Button>
         </form>
       </DialogContent>
     </Dialog>
@@ -61,9 +62,9 @@ function AuthButton() {
   const { user, setOpenLogin, logout } = useAuth();
   if (!user)
     return (
-      <button onClick={() => setOpenLogin(true)} className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90">
+      <Button onClick={() => setOpenLogin(true)} className="rounded-lg">
         Se connecter
-      </button>
+      </Button>
     );
   return (
     <DropdownMenu>
@@ -83,24 +84,25 @@ function AuthButton() {
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur-md">
-      <div className="container-page flex h-16 items-center justify-between gap-4">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-card/95 backdrop-blur-md">
+      <div className="container-page flex h-18 items-center justify-between gap-4">
         <Link to="/" className="flex items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-lg shadow-sm">🎓</span>
-          <span className="text-lg font-bold tracking-tight">Solusen</span>
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm"><GraduationCap className="h-5 w-5" /></span>
+          <span className="text-xl font-bold">Solusen</span>
         </Link>
         <nav className="hidden items-center gap-1 md:flex">
           {NAV.map((l) => (
-            <Link key={l.to} to={l.to} className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground" activeProps={{ className: "bg-primary-soft text-primary font-semibold" }} activeOptions={{ exact: true }}>
+            <Link key={l.to} to={l.to} className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground" activeProps={{ className: "bg-primary-soft text-primary font-semibold" }} activeOptions={{ exact: true }}>
               {l.label}
             </Link>
           ))}
         </nav>
         <div className="flex items-center gap-2">
+          <Button onClick={() => document.querySelector<HTMLButtonElement>("[data-open-assistant]")?.click()} className="hidden rounded-lg lg:inline-flex"><Sparkles />Assistant IA</Button>
           <AuthButton />
-          <button onClick={() => setOpen(!open)} className="rounded-lg p-2 hover:bg-accent md:hidden" aria-label="Menu">
+          <Button variant="ghost" size="icon" onClick={() => setOpen(!open)} className="md:hidden" aria-label="Menu">
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+          </Button>
         </div>
       </div>
       <div className={`overflow-hidden border-t border-border bg-background transition-all duration-300 md:hidden ${open ? "max-h-80" : "max-h-0 border-t-0"}`}>
