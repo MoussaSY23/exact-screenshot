@@ -8,12 +8,33 @@ function renderMarkdown(text: string) {
     const t = line.trim();
     const bullet = /^[-*•]\s+/.test(t);
     const heading = /^#{1,4}\s+/.test(t);
-    const clean = t.replace(/^[-*•]\s+/, "").replace(/^#{1,4}\s+/, "");
-    const parts = clean.split(/\*\*(.+?)\*\*/g).map((p, j) => (j % 2 ? <strong key={j}>{p}</strong> : p));
+    let clean = t.replace(/^[-*•]\s+/, "").replace(/^#{1,4}\s+/, "");
+    
+    // Handle links: [text](url)
+    const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+    const parts = [];
+    let lastIndex = 0;
+    let match;
+    while ((match = linkRegex.exec(clean)) !== null) {
+      if (match.index > lastIndex) {
+        parts.push(clean.substring(lastIndex, match.index));
+      }
+      parts.push(<a key={`link-${i}-${match.index}`} href={match[2]} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{match[1]}</a>);
+      lastIndex = match.index + match[0].length;
+    }
+    if (lastIndex < clean.length) {
+      parts.push(clean.substring(lastIndex));
+    }
+    
+    // Handle bold: **text**
+    const boldParts = parts.map((p, j) => 
+      typeof p === 'string' ? p.split(/\*\*(.+?)\*\*/g).map((bp, k) => (k % 2 ? <strong key={`${j}-${k}`}>{bp}</strong> : bp)) : p
+    ).flat();
+    
     if (!t) return <div key={i} className="h-2" />;
-    if (heading) return <p key={i} className="mt-2 font-semibold text-foreground">{parts}</p>;
-    if (bullet) return <li key={i} className="ml-5 list-disc">{parts}</li>;
-    return <p key={i}>{parts}</p>;
+    if (heading) return <p key={i} className="mt-2 font-semibold text-foreground">{boldParts}</p>;
+    if (bullet) return <li key={i} className="ml-5 list-disc">{boldParts}</li>;
+    return <p key={i}>{boldParts}</p>;
   });
 }
 
