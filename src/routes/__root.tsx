@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { AssistantSolusenIA } from "../components/AssistantSolusenIA";
 
 function NotFoundComponent() {
   return (
@@ -216,6 +217,7 @@ function RootComponent() {
           <Outlet />
         </main>
         <Footer />
+        <AssistantSolusenIA />
       </div>
     </QueryClientProvider>
   );
