@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Menu, X, LogOut, LayoutDashboard, Sparkles, GraduationCap, Phone, Mail, ShieldCheck } from "lucide-react";
+import { Menu, X, LogOut, LayoutDashboard, Sparkles, GraduationCap } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth, shortName } from "@/lib/auth";
@@ -8,9 +8,9 @@ import { Button } from "@/components/ui/button";
 
 export const NAV = [
   { to: "/", label: "Accueil" },
-  { to: "/offres", label: "Trouver un stage" },
+  { to: "/offres", label: "Offres & IA" },
   { to: "/favoris", label: "Mes Favoris" },
-  { to: "/espace", label: "Entreprises partenaires" },
+  { to: "/espace", label: "Mon Espace" },
   { to: "/transparence", label: "Transparence" },
 ] as const;
 
@@ -84,55 +84,34 @@ function AuthButton() {
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
-      {/* Topbar ultra-fine */}
-      <div className="bg-[#0B031E] border-b border-white/10">
-        <div className="container-page flex items-center justify-between py-1.5 text-xs text-white/70">
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5"><Phone className="h-3 w-3" /> +221 33 820 00 00</span>
-            <span className="hidden sm:flex items-center gap-1.5"><Mail className="h-3 w-3" /> contact@solusen.sn</span>
-          </div>
-          <span className="flex items-center gap-1.5 text-purple-300"><ShieldCheck className="h-3 w-3" /> Anti-fraude certifié</span>
-        </div>
-      </div>
-      
-      {/* Navbar principale */}
-      <div className="bg-[#150935] border-b border-white/10">
-        <div className="container-page flex h-16 items-center justify-between gap-4">
-          <Link to="/" className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 text-white shadow-lg"><GraduationCap className="h-5 w-5" /></span>
-            <span className="text-xl font-bold text-white">Solusen</span>
-          </Link>
-          <nav className="hidden items-center gap-1 md:flex">
-            {NAV.map((l) => (
-              <Link key={l.to} to={l.to} className="rounded-md px-3 py-2 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white" activeProps={{ className: "bg-white/10 text-white font-semibold" }} activeOptions={{ exact: true }}>
-                {l.label}
-              </Link>
-            ))}
-          </nav>
-          <div className="flex items-center gap-2">
-            <Button onClick={() => document.querySelector<HTMLButtonElement>("[data-open-assistant]")?.click()} className="hidden rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:opacity-95 text-white font-medium px-4 py-2 text-sm shadow-md lg:inline-flex">
-              <Sparkles className="mr-2 h-4 w-4" />Assistant IA
-            </Button>
-            <AuthButton />
-            <Button variant="ghost" size="icon" onClick={() => setOpen(!open)} className="md:hidden text-white hover:bg-white/10" aria-label="Menu">
-              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </Button>
-          </div>
-        </div>
-      </div>
-      
-      {/* Mobile menu */}
-      <div className={`overflow-hidden bg-[#150935] border-t border-white/10 transition-all duration-300 md:hidden ${open ? "max-h-80" : "max-h-0 border-t-0"}`}>
-        <nav className="container-page flex flex-col py-3">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-card/95 backdrop-blur-md">
+      <div className="container-page flex h-18 items-center justify-between gap-4">
+        <Link to="/" className="flex items-center gap-2.5">
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm"><GraduationCap className="h-5 w-5" /></span>
+          <span className="text-xl font-bold">Solusen</span>
+        </Link>
+        <nav className="hidden items-center gap-1 md:flex">
           {NAV.map((l) => (
-            <Link key={l.to} to={l.to} onClick={() => setOpen(false)} className="rounded-lg px-3 py-3 text-sm font-medium text-white/80 hover:bg-white/10" activeProps={{ className: "text-white font-semibold" }} activeOptions={{ exact: true }}>
+            <Link key={l.to} to={l.to} className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground" activeProps={{ className: "bg-primary-soft text-primary font-semibold" }} activeOptions={{ exact: true }}>
               {l.label}
             </Link>
           ))}
-          <Button onClick={() => document.querySelector<HTMLButtonElement>("[data-open-assistant]")?.click()} className="mt-3 w-full rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:opacity-95 text-white font-medium px-4 py-2 text-sm shadow-md">
-            <Sparkles className="mr-2 h-4 w-4" />Assistant IA
+        </nav>
+        <div className="flex items-center gap-2">
+          <Button onClick={() => document.querySelector<HTMLButtonElement>("[data-open-assistant]")?.click()} className="hidden rounded-lg lg:inline-flex"><Sparkles />Assistant IA</Button>
+          <AuthButton />
+          <Button variant="ghost" size="icon" onClick={() => setOpen(!open)} className="md:hidden" aria-label="Menu">
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
+        </div>
+      </div>
+      <div className={`overflow-hidden border-t border-border bg-background transition-all duration-300 md:hidden ${open ? "max-h-80" : "max-h-0 border-t-0"}`}>
+        <nav className="container-page flex flex-col py-3">
+          {NAV.map((l) => (
+            <Link key={l.to} to={l.to} onClick={() => setOpen(false)} className="rounded-lg px-3 py-3 text-sm font-medium text-muted-foreground hover:bg-accent" activeProps={{ className: "text-primary font-semibold" }} activeOptions={{ exact: true }}>
+              {l.label}
+            </Link>
+          ))}
         </nav>
       </div>
       <LoginDialog />

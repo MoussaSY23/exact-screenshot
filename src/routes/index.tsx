@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { FileSearch, Ban, Scale, Quote, ShieldCheck, BadgeCheck, Coins, ArrowRight, Sparkles, Search, MapPin, Briefcase, MessageCircle, CheckCircle2 } from "lucide-react";
+import { FileSearch, Ban, Scale, Quote, ShieldCheck, BadgeCheck, Coins, ArrowRight, Sparkles } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { OfferCard } from "@/components/OfferCard";
@@ -67,172 +67,33 @@ function Counter({ n, suffix }: { n: number; suffix: string }) {
 function Index() {
   const navigate = useNavigate();
   const openAssistant = () => document.querySelector<HTMLButtonElement>("[data-open-assistant]")?.click();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [domain, setDomain] = useState("Tous");
-  const [zone, setZone] = useState("Toutes");
-  const [profileType, setProfileType] = useState<"student" | "company">("student");
-
-  const domains = ["Tous", "Informatique", "Finance", "Marketing", "Transit", "Audit"];
-  const zones = ["Toutes", "Plateau", "Point E", "Almadies", "Mermoz", "Zone Portuaire"];
-  const popularTags = ["Dev Web", "Wave", "Gaindé 2000", "Marketing", "Audit"];
-
   return (
-    <div className="pt-24">
-      {/* Hero Section - Dark Premium */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#150935] via-[#1B0B40] to-[#0F0524]">
-        {/* Glow effect */}
-        <div className="absolute inset-0 bg-purple-600/20 blur-3xl opacity-20 pointer-events-none"></div>
-        
-        <div className="container-page relative grid gap-10 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:py-20">
-          {/* Left Column */}
-          <div className="space-y-6">
-            <span className="text-purple-300 bg-white/10 px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase inline-block">
-              Opportunités vérifiées à Dakar
-            </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight">
-              Trouvez le stage certifié qui correspond à vos talents & ambitions
+    <div>
+      <section className="hero-mesh overflow-hidden border-b border-border">
+        <div className="container-page grid min-h-[610px] items-center gap-10 py-12 lg:grid-cols-[1.08fr_.92fr] lg:py-16">
+          <div>
+            <span className="section-label"><ShieldCheck className="h-4 w-4" />Opportunités vérifiées à Dakar</span>
+            <h1 className="mt-5 max-w-3xl text-4xl font-bold leading-[1.08] sm:text-5xl lg:text-6xl">
+              Trouvez votre opportunité certifiée à Dakar <span className="text-brand-gradient">sans intermédiaires</span>
             </h1>
-            <p className="text-slate-300 text-base md:text-lg max-w-xl">
-              Explorez les opportunités de stage et de formation vérifiées à Dakar sans intermédiaire ni frais de dossier cachés.
+            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+              Des stages, alternances et formations contrôlés pour avancer grâce à vos compétences — jamais grâce au « bras long ».
             </p>
-            
-            {/* Profile Toggle */}
-            <div className="flex gap-2">
-              <button
-                onClick={() => setProfileType("student")}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                  profileType === "student"
-                    ? "bg-white text-purple-900"
-                    : "bg-white/10 text-white/80 hover:bg-white/20"
-                }`}
-              >
-                Je cherche un stage
-              </button>
-              <button
-                onClick={() => setProfileType("company")}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                  profileType === "company"
-                    ? "bg-white text-purple-900"
-                    : "bg-white/10 text-white/80 hover:bg-white/20"
-                }`}
-              >
-                Je suis une entreprise
-              </button>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Button asChild className="h-12 rounded-lg px-6"><Link to="/offres">Explorer les offres <ArrowRight /></Link></Button>
+              <Button onClick={openAssistant} variant="outline" className="h-12 rounded-lg px-6"><Sparkles />Tester l'Assistant IA</Button>
             </div>
-
-            {/* Search Bar */}
-            <div className="bg-white rounded-2xl p-3 md:p-4 shadow-2xl flex flex-col md:flex-row items-center gap-3 mt-6">
-              <div className="flex-1 relative w-full">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Intitulé ou mot-clé"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-purple-500"
-                />
-              </div>
-              <select
-                value={domain}
-                onChange={(e) => setDomain(e.target.value)}
-                className="w-full md:w-auto px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-purple-500 bg-white"
-              >
-                {domains.map((d) => (
-                  <option key={d} value={d}>{d}</option>
-                ))}
-              </select>
-              <select
-                value={zone}
-                onChange={(e) => setZone(e.target.value)}
-                className="w-full md:w-auto px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-purple-500 bg-white"
-              >
-                {zones.map((z) => (
-                  <option key={z} value={z}>{z}</option>
-                ))}
-              </select>
-              <button
-                onClick={() => navigate({ to: "/offres" })}
-                className="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-xl transition-all"
-              >
-                Rechercher
-              </button>
-            </div>
-
-            {/* Popular Tags */}
-            <div className="flex flex-wrap gap-2">
-              {popularTags.map((tag) => (
-                <button
-                  key={tag}
-                  className="bg-white/10 hover:bg-white/20 text-white/80 text-xs px-3 py-1 rounded-full transition-colors"
-                >
-                  {tag}
-                </button>
-              ))}
+            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+              <div className="flex items-center gap-2 text-sm font-semibold"><ShieldCheck className="h-5 w-5 text-primary" />Entreprises vérifiées</div>
+              <div className="flex items-center gap-2 text-sm font-semibold"><BadgeCheck className="h-5 w-5 text-certified" />Offres certifiées</div>
+              <div className="flex items-center gap-2 text-sm font-semibold"><Coins className="h-5 w-5 text-info" />0 frais cachés</div>
             </div>
           </div>
-
-          {/* Right Column */}
           <div className="relative">
-            <img
-              src={heroImg}
-              alt="Étudiants professionnels"
-              width={600}
-              height={500}
-              className="w-full rounded-2xl object-cover shadow-2xl"
-            />
-            
-            {/* Floating Stat Cards */}
-            <div className="absolute top-4 right-4 bg-white/10 backdrop-blur-md border border-white/15 p-3 rounded-xl text-white shadow-xl flex items-center gap-3 max-w-[180px]">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-500/20">
-                <ShieldCheck className="h-5 w-5 text-green-400" />
-              </div>
-              <div>
-                <p className="text-xs font-semibold">100% Gratuit</p>
-                <p className="text-[10px] text-white/70">0 FCFA Frais de dossier</p>
-              </div>
+            <img src={heroImg} alt="Étudiants dakarois sur la corniche" width={1536} height={1024} className="aspect-[4/3] w-full rounded-lg object-cover shadow-xl" />
+            <div className="absolute bottom-4 left-4 border border-border bg-card/95 p-4 shadow-lg backdrop-blur-sm">
+              <p className="text-2xl font-bold text-primary">450+</p><p className="text-xs font-medium text-muted-foreground">offres vérifiées</p>
             </div>
-            
-            <div className="absolute bottom-20 left-4 bg-white/10 backdrop-blur-md border border-white/15 p-3 rounded-xl text-white shadow-xl flex items-center gap-3 max-w-[180px]">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500/20">
-                <Briefcase className="h-5 w-5 text-blue-400" />
-              </div>
-              <div>
-                <p className="text-xs font-semibold">Entreprises Certifiées</p>
-                <p className="text-[10px] text-white/70">Vérification NINEA</p>
-              </div>
-            </div>
-            
-            <div className="absolute bottom-4 right-4 bg-white/10 backdrop-blur-md border border-white/15 p-3 rounded-xl text-white shadow-xl flex items-center gap-3 max-w-[180px]">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-purple-500/20">
-                <MessageCircle className="h-5 w-5 text-purple-400" />
-              </div>
-              <div>
-                <p className="text-xs font-semibold">Insertion Directe</p>
-                <p className="text-[10px] text-white/70">Contact direct sans intermédiaire</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Ribbon */}
-      <section className="bg-[#0B031E] border-y border-white/10">
-        <div className="container-page grid grid-cols-2 md:grid-cols-4 gap-8 py-8">
-          <div className="text-center">
-            <p className="text-3xl font-extrabold text-white">100%</p>
-            <p className="text-sm text-purple-300 mt-1">Stages certifiés</p>
-          </div>
-          <div className="text-center">
-            <p className="text-3xl font-extrabold text-white">0 FCFA</p>
-            <p className="text-sm text-purple-300 mt-1">Frais de dossier</p>
-          </div>
-          <div className="text-center">
-            <p className="text-3xl font-extrabold text-white">10+</p>
-            <p className="text-sm text-purple-300 mt-1">Partenaires à Dakar</p>
-          </div>
-          <div className="text-center">
-            <p className="text-3xl font-extrabold text-white">1 Clic</p>
-            <p className="text-sm text-purple-300 mt-1">Postulation directe WhatsApp</p>
           </div>
         </div>
       </section>
