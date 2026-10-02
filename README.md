@@ -11,7 +11,7 @@
 **Cours :** GET 409 - Innovation & Transformation Numérique  
 **Institution :** Swiss UMEF University Dakar  
 **Année Académique :** 2025-2026  
-**Dépôt GitHub :** [https://github.com/MoussaSY23/stage-connect-dakar.git](https://github.com/MoussaSY23/stage-connect-dakar.git)  
+**Dépôt GitHub :** [https://github.com/MoussaSY23/exact-screenshot.git](https://github.com/MoussaSY23/exact-screenshot.git)  
 **Application Live :** [https://stage-connect-dakar.lovable.app](https://stage-connect-dakar.lovable.app)
 
 ---
@@ -169,7 +169,7 @@ Continuez le développement dans l'éditeur Lovable : [Lovable Editor](https://l
 Préférez travailler localement ? Vous avez besoin de Node.js et npm — [installez avec nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
 
 ```sh
-git clone https://github.com/MoussaSY23/stage-connect-dakar.git
+git clone https://github.com/MoussaSY23/exact-screenshot.git
 cd stage-connect-dakar
 npm i
 npm run dev
@@ -180,7 +180,7 @@ npm run dev
 ## 📞 Contact
 
 - **Chef de Projet :** Moussa Sy
-- **Dépôt GitHub :** [https://github.com/MoussaSY23/stage-connect-dakar.git](https://github.com/MoussaSY23/stage-connect-dakar.git)
+- **Dépôt GitHub :** [https://github.com/MoussaSY23/exact-screenshot.git](https://github.com/MoussaSY23/exact-screenshot.git)
 - **Application Live :** [https://stage-connect-dakar.lovable.app](https://stage-connect-dakar.lovable.app)
 - **Institution :** Swiss UMEF University Dakar
 
