@@ -66,9 +66,9 @@ export function AssistantSolusenIA() {
           <span className="ml-1 rounded-full bg-white/20 px-2 py-0.5 text-xs">✨</span>
         </button>
       ) : (
-        <div className="w-[calc(100vw-2rem)] max-w-md rounded-2xl border border-border bg-card shadow-2xl sm:w-96">
+        <div className="w-[calc(100vw-2rem)] max-w-md max-h-[80vh] flex flex-col rounded-2xl border border-border bg-card shadow-2xl sm:w-96">
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-border bg-primary/5 px-4 py-3">
+          <div className="flex items-center justify-between border-b border-border bg-primary/5 px-4 py-3 shrink-0">
             <div className="flex items-center gap-2">
               <span className="text-xl">🎓</span>
               <div>
@@ -85,33 +85,36 @@ export function AssistantSolusenIA() {
             </button>
           </div>
 
-          {/* Content */}
-          <div className="p-4">
-            {/* Response Area */}
-            {(response || error || isLoading) && (
-              <div className="mb-4 rounded-xl border border-green-200 bg-green-50 p-4">
-                {isLoading && (
-                  <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-                    <span>L'IA réfléchit...</span>
-                  </div>
-                )}
-                {error && (
-                  <div className="text-sm text-red-600">
-                    <span className="font-semibold">⚠️ Erreur :</span> {error}
-                  </div>
-                )}
-                {response && !isLoading && (
-                  <div className="text-sm leading-relaxed text-foreground">
-                    <div className="mb-2 font-semibold text-green-700">✓ Réponse IA :</div>
-                    <div className="whitespace-pre-wrap">{response}</div>
-                  </div>
-                )}
-              </div>
-            )}
+          {/* Content with scroll */}
+          <div className="flex flex-col overflow-hidden p-4">
+            {/* Response Area with scroll */}
+            <div className="mb-4 max-h-60 overflow-y-auto rounded-xl border border-green-200 bg-green-50 p-4 shrink-0">
+              {isLoading && (
+                <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                  <span>L'IA réfléchit...</span>
+                </div>
+              )}
+              {error && (
+                <div className="text-sm text-red-600">
+                  <span className="font-semibold">⚠️ Erreur :</span> {error}
+                </div>
+              )}
+              {response && !isLoading && (
+                <div className="text-sm leading-relaxed text-foreground">
+                  <div className="mb-2 font-semibold text-green-700">✓ Réponse IA :</div>
+                  <div className="whitespace-pre-wrap">{response}</div>
+                </div>
+              )}
+              {!response && !error && !isLoading && (
+                <div className="text-sm text-muted-foreground">
+                  Posez une question pour commencer...
+                </div>
+              )}
+            </div>
 
             {/* Input Form */}
-            <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3 shrink-0">
               <input
                 type="text"
                 value={query}
@@ -130,7 +133,7 @@ export function AssistantSolusenIA() {
             </form>
 
             {/* Helper Text */}
-            <p className="mt-3 text-center text-xs text-muted-foreground">
+            <p className="mt-3 shrink-0 text-center text-xs text-muted-foreground">
               L'assistant vous aide à trouver des stages et formations certifiés à Dakar
             </p>
           </div>
