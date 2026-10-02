@@ -6,17 +6,22 @@ export const askDify = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const key = process.env["DIFY_API_KEY"] ?? "app-X2YxY1LmzaotAoNZHmkylj6p";
     try {
-      const res = await fetch("https://api.dify.ai/v1/chat-messages", {
+      const res = await fetch("https://api.dify.ai/v1/workflows/run", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
-        body: JSON.stringify({ query: data.query, response_mode: "blocking", user: "etudiant-solusen", inputs: {} }),
+        body: JSON.stringify({ 
+          inputs: { query: data.query }, 
+          response_mode: "blocking", 
+          user: "etudiant-solusen-" + Date.now() 
+        }),
       });
       if (!res.ok) {
         console.error("Dify error", res.status, await res.text());
         return { answer: "", error: "L'agent est momentanément indisponible. Réessayez dans un instant." };
       }
-      const json = (await res.json()) as { answer?: string };
-      return { answer: json.answer ?? "", error: null as string | null };
+      const json = (await res.json()) as { outputs?: { text?: string; answer?: string } };
+      const answer = json.outputs?.text || json.outputs?.answer || "";
+      return { answer, error: null as string | null };
     } catch (e) {
       console.error(e);
       return { answer: "", error: "Impossible de joindre l'agent. Vérifiez votre connexion." };

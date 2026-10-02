@@ -4,11 +4,15 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import type { Offer } from "@/lib/offers";
 
 export function ApplyDialog({ offer, onClose }: { offer: Offer | null; onClose: () => void }) {
+  const [name, setName] = useState("Modou Sene");
+  const [email, setEmail] = useState("modou.sene@ucad.edu.sn");
   const [file, setFile] = useState("");
   const [letter, setLetter] = useState("");
   const [sent, setSent] = useState(false);
 
   const close = () => {
+    setName("Modou Sene");
+    setEmail("modou.sene@ucad.edu.sn");
     setFile("");
     setLetter("");
     setSent(false);
@@ -31,6 +35,24 @@ export function ApplyDialog({ offer, onClose }: { offer: Offer | null; onClose: 
                 setSent(true);
               }}
             >
+              <div>
+                <label className="mb-1.5 block text-sm font-medium">Nom complet</label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none focus:border-ring"
+                />
+              </div>
+              <div>
+                <label className="mb-1.5 block text-sm font-medium">E-mail étudiant</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none focus:border-ring"
+                />
+              </div>
               <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-border bg-muted p-4 text-sm hover:bg-accent">
                 <Upload className="h-5 w-5 text-primary" />
                 <span>{file || "Joindre votre CV (PDF)"}</span>
@@ -38,7 +60,7 @@ export function ApplyDialog({ offer, onClose }: { offer: Offer | null; onClose: 
               </label>
               <div>
                 <div className="mb-1.5 flex items-center justify-between">
-                  <span className="text-sm font-medium">Lettre de motivation</span>
+                  <span className="text-sm font-medium">Lettre de motivation (optionnel)</span>
                   <button
                     type="button"
                     onClick={() =>
@@ -54,12 +76,13 @@ export function ApplyDialog({ offer, onClose }: { offer: Offer | null; onClose: 
                 <textarea
                   value={letter}
                   onChange={(e) => setLetter(e.target.value)}
-                  rows={6}
+                  rows={4}
                   maxLength={2000}
+                  placeholder="Message de motivation court (optionnel)"
                   className="w-full rounded-xl border border-input bg-background p-3 text-sm outline-none focus:border-ring"
                 />
               </div>
-              <button disabled={!file || !letter.trim()} className="w-full rounded-xl bg-primary py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90 disabled:opacity-50">
+              <button disabled={!file} className="w-full rounded-xl bg-primary py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90 disabled:opacity-50">
                 Envoyer ma candidature
               </button>
             </form>
@@ -69,7 +92,7 @@ export function ApplyDialog({ offer, onClose }: { offer: Offer | null; onClose: 
           <div className="py-6 text-center">
             <CheckCircle2 className="mx-auto h-12 w-12 text-certified" />
             <p className="mt-4 text-lg font-bold">Candidature transmise !</p>
-            <p className="mt-1 text-sm text-muted-foreground">Suivez son statut dans Mon Espace.</p>
+            <p className="mt-1 text-sm text-muted-foreground">Votre candidature a été transmise gratuitement à l'entreprise sans intermédiaire !</p>
             <button onClick={close} className="mt-6 rounded-xl bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground">Fermer</button>
           </div>
         )}

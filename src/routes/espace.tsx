@@ -20,9 +20,8 @@ export const Route = createFileRoute("/espace")({
 });
 
 const APPS = [
-  { company: "Wave Digital Finance", role: "Stagiaire Product Analyst", date: "28 sept. 2026", status: "Candidature transmise", tone: "bg-primary-soft text-primary" },
-  { company: "GAINDÉ 2000", role: "Développeur Full-Stack", date: "21 sept. 2026", status: "Entretien programmé", tone: "bg-certified-soft text-certified" },
-  { company: "Sonatel Siège", role: "Stagiaire Marketing Digital", date: "15 sept. 2026", status: "En cours d'examen", tone: "bg-muted text-muted-foreground" },
+  { company: "Wave Digital Finance", role: "Stagiaire Product Analyst", date: "Octobre 2026", status: "Dossier transmis", tone: "bg-primary-soft text-primary" },
+  { company: "GAINDÉ 2000", role: "Développeur Full-Stack", date: "Octobre 2026", status: "Entretien programmé", tone: "bg-certified-soft text-certified" },
 ];
 
 function Espace() {
@@ -104,7 +103,7 @@ function Espace() {
         </TabsContent>
 
         <TabsContent value="reco" className="mt-6 grid gap-5 md:grid-cols-2">
-          {[{ o: OFFERS[2]!, s: 94 }, { o: OFFERS[5]!, s: 88 }].map(({ o, s }) => (
+          {[{ o: OFFERS[2]!, s: 96 }, { o: OFFERS[5]!, s: 88 }].map(({ o, s }) => (
             <div key={o.id} className="rounded-2xl border border-border bg-card p-6 shadow-sm">
               <div className="flex items-center justify-between">
                 <span className="rounded-full bg-certified-soft px-3 py-1 text-xs font-bold text-certified">{s}% de compatibilité</span>
@@ -112,7 +111,7 @@ function Espace() {
               </div>
               <h3 className="mt-4 font-bold">{o.title}</h3>
               <p className="text-sm text-muted-foreground">{o.company} · {o.zone} · {o.pay}</p>
-              <p className="mt-3 text-sm text-muted-foreground">Correspond à vos compétences React et Python.</p>
+              <p className="mt-3 text-sm text-muted-foreground">{s}% de compatibilité basé sur vos compétences en développement.</p>
               <Link to="/offres" className="mt-4 inline-block text-sm font-semibold text-primary hover:underline">Voir l'offre →</Link>
             </div>
           ))}
