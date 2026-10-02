@@ -40,13 +40,17 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --color-ink: var(--ink);
+  --color-ink-foreground: var(--ink-foreground);
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
   --radius: 0.75rem;
-  --background: oklch(1 0 0);
+  --background: oklch(0.984 0.003 247.858);
+  --ink: oklch(0.208 0.042 265.755);
+  --ink-foreground: oklch(0.929 0.013 255.508);
   --foreground: oklch(0.23 0.03 248);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.23 0.03 248);
