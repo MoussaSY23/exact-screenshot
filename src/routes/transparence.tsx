@@ -10,6 +10,8 @@ export const Route = createFileRoute("/transparence")({
       { name: "description", content: "Notre mission contre la corruption et le népotisme à Dakar. Déposez une offre certifiée ou signalez une annonce suspecte." },
       { property: "og:title", content: "Transparence & Contact — Solusen" },
       { property: "og:description", content: "Entreprises : déposez une offre certifiée. Étudiants : signalez une annonce ou demandez une orientation." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Transparence,

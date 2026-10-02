@@ -1,7 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { FileSearch, Ban, Scale, Quote } from "lucide-react";
+import { FileSearch, Ban, Scale, Quote, ShieldCheck, BadgeCheck, Coins, ArrowRight, Sparkles } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
 import { OfferCard } from "@/components/OfferCard";
 import { OFFERS } from "@/lib/offers";
 import heroImg from "@/assets/hero-dakar.jpg";
@@ -14,6 +15,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Stages, alternances et formations certifiés à Dakar. Zéro arnaque, zéro frais, zéro « bras long »." },
       { property: "og:title", content: "Solusen — L'insertion professionnelle au mérite à Dakar" },
       { property: "og:description", content: "Des opportunités vérifiées et un agent d'orientation IA pour les étudiants de Dakar." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Index,
@@ -66,47 +69,57 @@ function Index() {
   const openAssistant = () => document.querySelector<HTMLButtonElement>("[data-open-assistant]")?.click();
   return (
     <div>
-      <section className="hero-mesh overflow-hidden">
-        <div className="container-page grid items-center gap-12 py-16 md:grid-cols-2 md:py-24">
+      <section className="hero-mesh overflow-hidden border-b border-border">
+        <div className="container-page grid min-h-[610px] items-center gap-10 py-12 lg:grid-cols-[1.08fr_.92fr] lg:py-16">
           <div>
-            <span className="inline-flex rounded-full border border-primary/20 bg-card px-4 py-1.5 text-xs font-semibold text-primary">✦ Plateforme d'insertion — Dakar</span>
-            <h1 className="mt-6 text-4xl font-extrabold leading-tight sm:text-5xl">
-              L'insertion professionnelle <span className="text-primary">au mérite</span> à Dakar, zéro « bras long ».
+            <span className="section-label"><ShieldCheck className="h-4 w-4" />Opportunités vérifiées à Dakar</span>
+            <h1 className="mt-5 max-w-3xl text-4xl font-bold leading-[1.08] sm:text-5xl lg:text-6xl">
+              Trouvez votre opportunité certifiée à Dakar <span className="text-brand-gradient">sans intermédiaires</span>
             </h1>
-            <p className="mt-5 max-w-lg text-lg leading-relaxed text-muted-foreground">
-              Fini les faux stages et les intermédiaires payants. Chaque offre est vérifiée et chaque gratification contrôlée.
+            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+              Des stages, alternances et formations contrôlés pour avancer grâce à vos compétences — jamais grâce au « bras long ».
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link to="/offres" className="rounded-xl bg-primary px-6 py-3.5 text-center text-sm font-semibold text-primary-foreground shadow-md hover:bg-primary/90">Explorer les opportunités certifiées</Link>
-              <button onClick={openAssistant} className="rounded-xl border border-border bg-card px-6 py-3.5 text-sm font-semibold shadow-sm hover:bg-accent">Tester l'Agent d'orientation IA ✨</button>
+              <Button asChild className="h-12 rounded-lg px-6"><Link to="/offres">Explorer les offres <ArrowRight /></Link></Button>
+              <Button onClick={openAssistant} variant="outline" className="h-12 rounded-lg px-6"><Sparkles />Tester l'Assistant IA</Button>
+            </div>
+            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+              <div className="flex items-center gap-2 text-sm font-semibold"><ShieldCheck className="h-5 w-5 text-primary" />Entreprises vérifiées</div>
+              <div className="flex items-center gap-2 text-sm font-semibold"><BadgeCheck className="h-5 w-5 text-certified" />Offres certifiées</div>
+              <div className="flex items-center gap-2 text-sm font-semibold"><Coins className="h-5 w-5 text-info" />0 frais cachés</div>
             </div>
           </div>
-          <img src={heroImg} alt="Étudiants dakarois sur la corniche" width={1536} height={1024} className="rounded-3xl object-cover shadow-xl" />
-        </div>
-      </section>
-
-      <section className="border-y border-border bg-card">
-        <div className="container-page py-8">
-          <p className="text-center text-xs font-semibold uppercase tracking-widest text-muted-foreground">Écosystème de partenaires vérifiés</p>
-          <div className="mt-5 flex flex-wrap justify-center gap-3">
-            {PARTNERS.map((p) => <span key={p} className="rounded-full border border-border bg-background px-4 py-2 text-sm font-semibold text-muted-foreground">{p}</span>)}
+          <div className="relative">
+            <img src={heroImg} alt="Étudiants dakarois sur la corniche" width={1536} height={1024} className="aspect-[4/3] w-full rounded-lg object-cover shadow-xl" />
+            <div className="absolute bottom-4 left-4 border border-border bg-card/95 p-4 shadow-lg backdrop-blur-sm">
+              <p className="text-2xl font-bold text-primary">450+</p><p className="text-xs font-medium text-muted-foreground">offres vérifiées</p>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="container-page grid grid-cols-2 gap-6 py-16 lg:grid-cols-4">
+      <section className="border-b border-border bg-card">
+        <div className="container-page py-8">
+          <p className="text-center text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">Écosystème de partenaires vérifiés</p>
+          <div className="mt-5 flex flex-wrap justify-center gap-3">
+            {PARTNERS.map((p) => <span key={p} className="rounded-md border border-border bg-background px-4 py-2 text-sm font-semibold text-muted-foreground">{p}</span>)}
+          </div>
+        </div>
+      </section>
+
+      <section className="container-page grid grid-cols-2 gap-px bg-border py-16 lg:grid-cols-4">
         {STATS.map((s) => (
-          <div key={s.label} className="rounded-2xl border border-border bg-card p-6 text-center shadow-sm">
+          <div key={s.label} className="bg-card p-6 text-center">
             <p className="text-3xl font-extrabold text-primary md:text-4xl"><Counter n={s.n} suffix={s.suffix} /></p>
             <p className="mt-2 text-sm text-muted-foreground">{s.label}</p>
           </div>
         ))}
       </section>
 
-      <section className="container-page pb-16">
+      <section className="container-page pb-20">
         <div className="flex items-end justify-between gap-4">
-          <h2 className="text-3xl font-bold">Opportunités en vedette</h2>
-          <Link to="/offres" className="text-sm font-semibold text-primary hover:underline">Tout voir →</Link>
+          <div><span className="section-label">Sélection du moment</span><h2 className="mt-2 text-3xl font-bold">Opportunités en vedette</h2></div>
+          <Link to="/offres" className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline">Tout voir <ArrowRight className="h-4 w-4" /></Link>
         </div>
         <div className="mt-8 grid gap-5 md:grid-cols-3">
           {OFFERS.filter((o) => ["wave", "gainde", "bdo"].includes(o.id)).map((o) => (
@@ -115,13 +128,13 @@ function Index() {
         </div>
       </section>
 
-      <section className="bg-card py-16">
+      <section className="border-y border-border bg-card py-20">
         <div className="container-page">
-          <h2 className="text-center text-3xl font-bold">Notre Charte Anti-Arnaque</h2>
+          <div className="text-center"><span className="section-label">Notre engagement</span><h2 className="mt-2 text-3xl font-bold">Notre Charte Anti-Arnaque</h2></div>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {PILLARS.map((p, i) => (
-              <div key={p.title} className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-                <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-certified-soft text-certified"><p.icon className="h-6 w-6" /></span>
+              <div key={p.title} className="border border-border bg-background p-6 shadow-sm transition-all hover:shadow-md">
+                <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-certified-soft text-certified"><p.icon className="h-6 w-6" /></span>
                 <h3 className="mt-4 font-bold">{i + 1}. {p.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.text}</p>
               </div>
@@ -131,8 +144,8 @@ function Index() {
       </section>
 
       <section className="container-page py-16">
-        <div className="grid items-center gap-10 rounded-3xl border border-border bg-card p-6 shadow-md md:grid-cols-[280px_1fr] md:p-10">
-          <img src={modouImg} alt="Modou Sene, étudiant à l'UCAD" loading="lazy" width={768} height={1024} className="mx-auto h-72 w-56 rounded-2xl object-cover" />
+        <div className="grid items-center gap-10 border border-border bg-card p-6 shadow-sm md:grid-cols-[280px_1fr] md:p-10">
+          <img src={modouImg} alt="Modou Sene, étudiant à l'UCAD" loading="lazy" width={768} height={1024} className="mx-auto h-72 w-56 rounded-lg object-cover" />
           <div>
             <Quote className="h-8 w-8 text-primary" />
             <p className="mt-4 text-lg leading-relaxed">« Pendant des mois, on m'a demandé de payer pour des stages qui n'existaient pas. Sur Solusen, j'ai postulé chez GAINDÉ 2000 sans connaître personne, et j'ai décroché mon entretien en deux semaines. »</p>
@@ -144,7 +157,7 @@ function Index() {
 
       <section className="container-page max-w-3xl pb-20">
         <h2 className="text-center text-3xl font-bold">Questions fréquentes</h2>
-        <Accordion type="single" collapsible className="mt-8 rounded-2xl border border-border bg-card px-6 shadow-sm">
+        <Accordion type="single" collapsible className="mt-8 border border-border bg-card px-6 shadow-sm">
           {FAQ.map((f, i) => (
             <AccordionItem key={i} value={`q${i}`}>
               <AccordionTrigger className="text-left font-semibold">{f.q}</AccordionTrigger>

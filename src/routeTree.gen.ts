@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EspaceRouteImport } from './routes/espace'
+import { Route as FavorisRouteImport } from './routes/favoris'
 import { Route as OffresRouteImport } from './routes/offres'
 import { Route as TransparenceRouteImport } from './routes/transparence'
 
@@ -22,6 +23,11 @@ const IndexRoute = IndexRouteImport.update({
 const EspaceRoute = EspaceRouteImport.update({
   id: '/espace',
   path: '/espace',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FavorisRoute = FavorisRouteImport.update({
+  id: '/favoris',
+  path: '/favoris',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OffresRoute = OffresRouteImport.update({
@@ -38,12 +44,14 @@ const TransparenceRoute = TransparenceRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/espace': typeof EspaceRoute
+  '/favoris': typeof FavorisRoute
   '/offres': typeof OffresRoute
   '/transparence': typeof TransparenceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/espace': typeof EspaceRoute
+  '/favoris': typeof FavorisRoute
   '/offres': typeof OffresRoute
   '/transparence': typeof TransparenceRoute
 }
@@ -51,20 +59,22 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/espace': typeof EspaceRoute
+  '/favoris': typeof FavorisRoute
   '/offres': typeof OffresRoute
   '/transparence': typeof TransparenceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/espace' | '/offres' | '/transparence'
+  fullPaths: '/' | '/espace' | '/favoris' | '/offres' | '/transparence'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/espace' | '/offres' | '/transparence'
-  id: '__root__' | '/' | '/espace' | '/offres' | '/transparence'
+  to: '/' | '/espace' | '/favoris' | '/offres' | '/transparence'
+  id: '__root__' | '/' | '/espace' | '/favoris' | '/offres' | '/transparence'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   EspaceRoute: typeof EspaceRoute
+  FavorisRoute: typeof FavorisRoute
   OffresRoute: typeof OffresRoute
   TransparenceRoute: typeof TransparenceRoute
 }
@@ -83,6 +93,13 @@ declare module '@tanstack/react-router' {
       path: '/espace'
       fullPath: '/espace'
       preLoaderRoute: typeof EspaceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/favoris': {
+      id: '/favoris'
+      path: '/favoris'
+      fullPath: '/favoris'
+      preLoaderRoute: typeof FavorisRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/offres': {
@@ -105,6 +122,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   EspaceRoute: EspaceRoute,
+  FavorisRoute: FavorisRoute,
   OffresRoute: OffresRoute,
   TransparenceRoute: TransparenceRoute,
 }

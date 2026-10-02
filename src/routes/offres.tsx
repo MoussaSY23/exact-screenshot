@@ -13,6 +13,8 @@ export const Route = createFileRoute("/offres")({
       { name: "description", content: "Stages, alternances et formations certifiantes à Dakar, filtrables par zone et niveau, avec un assistant IA d'orientation." },
       { property: "og:title", content: "Offres certifiées & Assistant IA — Solusen" },
       { property: "og:description", content: "Wave, GAINDÉ 2000, Sonatel, BDO… des offres vérifiées et un agent IA pour vous conseiller." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Offres,
@@ -44,10 +46,11 @@ function Offres() {
 
   return (
     <div>
-      <section className="hero-mesh border-b border-border">
+      <section className="border-b border-border bg-card">
         <div className="container-page py-10 md:py-14">
-          <h1 className="text-3xl font-bold md:text-4xl">Offres & Assistant IA</h1>
-          <p className="mt-3 max-w-2xl text-muted-foreground">Toutes les opportunités ci-dessous sont certifiées Solusen. Posez vos questions à l'agent pour être orienté.</p>
+          <span className="section-label">Catalogue certifié</span>
+          <h1 className="mt-3 text-4xl font-bold md:text-5xl">Votre prochaine opportunité commence ici</h1>
+          <p className="mt-3 max-w-2xl text-muted-foreground">Comparez des offres vérifiées, sans frais cachés, puis demandez conseil à l'Assistant IA.</p>
           <div className="mt-8"><AskAgent /></div>
         </div>
       </section>
