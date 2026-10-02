@@ -38,6 +38,10 @@
   --color-ring: var(--ring);
   --color-ink: var(--ink);
   --color-ink-foreground: var(--ink-foreground);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
 }
@@ -69,6 +73,10 @@
   --border: oklch(0.922 0.012 260);
   --input: oklch(0.922 0.012 260);
   --ring: oklch(0.511 0.23 276.97);
+  --info: oklch(0.57 0.14 230);
+  --info-soft: oklch(0.955 0.035 230);
+  --warning: oklch(0.61 0.15 62);
+  --warning-soft: oklch(0.965 0.04 80);
 }
 
 @layer base {
