@@ -1,225 +1,80 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { Search } from "lucide-react";
+import { AskAgent } from "@/components/AskAgent";
+import { OfferCard } from "@/components/OfferCard";
+import { ApplyDialog } from "@/components/ApplyDialog";
+import { OFFERS, type Offer } from "@/lib/offers";
 
 export const Route = createFileRoute("/offres")({
   head: () => ({
     meta: [
-      { title: "Offres de stages & formations — Solusen" },
-      {
-        name: "description",
-        content:
-          "Parcourez les stages et formations certifiés à Dakar : Plateau, Almadies, Pikine, Parcelles Assainies. Offres vérifiées par IA, sans arnaque.",
-      },
-      { property: "og:title", content: "Offres de stages & formations — Solusen" },
-      {
-        property: "og:description",
-        content:
-          "Stages et formations certifiés à Dakar, filtrables par type et par zone. Chaque offre est vérifiée avant publication.",
-      },
+      { title: "Offres certifiées & Assistant IA — Solusen" },
+      { name: "description", content: "Stages, alternances et formations certifiantes à Dakar, filtrables par zone et niveau, avec un assistant IA d'orientation." },
+      { property: "og:title", content: "Offres certifiées & Assistant IA — Solusen" },
+      { property: "og:description", content: "Wave, GAINDÉ 2000, Sonatel, BDO… des offres vérifiées et un agent IA pour vous conseiller." },
     ],
   }),
   component: Offres,
 });
 
-type Offer = {
-  title: string;
-  company: string;
-  zone: string;
-  compensation: string;
-  type: "Stage" | "Formation";
-  status: "Certifiée" | "Vérification en cours";
-};
+const TYPES = ["Tous", "Stage", "Alternance", "Formation certifiante"] as const;
+const ZONES = ["Toutes zones", "Dakar Plateau", "Almadies", "Point E", "Mermoz", "Pikine"] as const;
+const LEVELS = ["Tous niveaux", "Licence", "Master"] as const;
 
-const OFFERS: Offer[] = [
-  {
-    title: "Assistant Marketing Digital",
-    company: "Teranga Tech",
-    zone: "Almadies",
-    compensation: "150 000 FCFA/mois",
-    type: "Stage",
-    status: "Certifiée",
-  },
-  {
-    title: "Développeur Web Junior",
-    company: "Dakar Innovation Lab",
-    zone: "Dakar Plateau",
-    compensation: "180 000 FCFA/mois",
-    type: "Stage",
-    status: "Certifiée",
-  },
-  {
-    title: "Certification Data Analyst",
-    company: "Université Numérique",
-    zone: "Dakar Plateau",
-    compensation: "Gratuit",
-    type: "Formation",
-    status: "Certifiée",
-  },
-  {
-    title: "Stagiaire Comptabilité",
-    company: "Groupe Ndiaye & Co",
-    zone: "Pikine",
-    compensation: "100 000 FCFA/mois",
-    type: "Stage",
-    status: "Certifiée",
-  },
-  {
-    title: "Formation Design UX/UI",
-    company: "Baobab Digital Academy",
-    zone: "Parcelles Assainies",
-    compensation: "50 000 FCFA",
-    type: "Formation",
-    status: "Certifiée",
-  },
-  {
-    title: "Assistant Ressources Humaines",
-    company: "Sonatel Partner",
-    zone: "Mermoz",
-    compensation: "125 000 FCFA/mois",
-    type: "Stage",
-    status: "Certifiée",
-  },
-];
-
-const TYPES = ["Tous", "Stage", "Formation"] as const;
-const ZONES = ["Toutes zones", "Dakar Plateau", "Almadies", "Pikine", "Parcelles Assainies"] as const;
+const sel = "rounded-xl border border-input bg-card px-3 py-2.5 text-sm outline-none focus:border-ring";
 
 function Offres() {
-  const [type, setType] = useState<(typeof TYPES)[number]>("Tous");
-  const [zone, setZone] = useState<(typeof ZONES)[number]>("Toutes zones");
+  const [q, setQ] = useState("");
+  const [type, setType] = useState<string>("Tous");
+  const [zone, setZone] = useState<string>("Toutes zones");
+  const [level, setLevel] = useState<string>("Tous niveaux");
+  const [applying, setApplying] = useState<Offer | null>(null);
 
-  const filtered = useMemo(
-    () =>
-      OFFERS.filter(
-        (offer) =>
-          (type === "Tous" || offer.type === type) &&
-          (zone === "Toutes zones" || offer.zone === zone),
-      ),
-    [type, zone],
-  );
+  const list = useMemo(() => {
+    const s = q.toLowerCase().trim();
+    return OFFERS.filter(
+      (o) =>
+        (!s || `${o.title} ${o.company} ${o.tag}`.toLowerCase().includes(s)) &&
+        (type === "Tous" || o.type === type) &&
+        (zone === "Toutes zones" || o.zone === zone) &&
+        (level === "Tous niveaux" || o.level === level),
+    );
+  }, [q, type, zone, level]);
 
   return (
-    <div className="bg-secondary/30">
+    <div>
       <section className="hero-mesh border-b border-border">
-        <div className="container-page py-12 md:py-16">
-          <span className="text-xs font-bold uppercase tracking-widest text-primary">
-            Offres vérifiées
-          </span>
-          <h1 className="mt-3 text-3xl font-bold text-foreground md:text-4xl">
-            Stages & formations à Dakar
-          </h1>
-          <p className="mt-4 max-w-2xl leading-relaxed text-muted-foreground">
-            Chaque offre affichée ici a été contrôlée : entreprise identifiée, conditions réelles,
-            gratification annoncée. Le badge <span className="font-semibold text-certified">✓ Offre Vérifiée IA</span> vous protège des arnaques.
-          </p>
+        <div className="container-page py-10 md:py-14">
+          <h1 className="text-3xl font-bold md:text-4xl">Offres & Assistant IA</h1>
+          <p className="mt-3 max-w-2xl text-muted-foreground">Toutes les opportunités ci-dessous sont certifiées Solusen. Posez vos questions à l'agent pour être orienté.</p>
+          <div className="mt-8"><AskAgent /></div>
         </div>
       </section>
 
-      {/* Filtres */}
       <section className="sticky top-16 z-30 border-b border-border bg-background/90 backdrop-blur-md">
-        <div className="container-page flex flex-col gap-3 py-4 md:flex-row md:items-center md:gap-6">
-          <div className="flex items-center gap-2">
-            <span className="shrink-0 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-              Type
-            </span>
-            <div className="flex flex-wrap gap-1.5">
-              {TYPES.map((t) => (
-                <button
-                  key={t}
-                  onClick={() => setType(t)}
-                  aria-pressed={type === t}
-                  className={
-                    type === t
-                      ? "rounded-full bg-primary px-4 py-1.5 text-xs font-semibold text-primary-foreground transition-colors"
-                      : "rounded-full border border-border bg-card px-4 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent"
-                  }
-                >
-                  {t}
-                </button>
-              ))}
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <label
-              htmlFor="zone-filter"
-              className="shrink-0 text-xs font-semibold uppercase tracking-wide text-muted-foreground"
-            >
-              Zone
-            </label>
-            <select
-              id="zone-filter"
-              value={zone}
-              onChange={(e) => setZone(e.target.value as (typeof ZONES)[number])}
-              className="w-full rounded-full border border-input bg-card px-4 py-1.5 text-xs font-medium text-foreground outline-none transition-colors focus:border-ring md:w-auto"
-            >
-              {ZONES.map((z) => (
-                <option key={z} value={z}>
-                  {z}
-                </option>
-              ))}
-            </select>
-          </div>
-          <span className="text-xs text-muted-foreground md:ml-auto">
-            {filtered.length} offre{filtered.length > 1 ? "s" : ""} · {type} · {zone}
-          </span>
+        <div className="container-page grid gap-3 py-4 md:grid-cols-[1fr_auto_auto_auto]">
+          <label className="relative">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Métier, entreprise…" className={`${sel} w-full pl-9`} />
+          </label>
+          <select value={type} onChange={(e) => setType(e.target.value)} className={sel} aria-label="Type">{TYPES.map((t) => <option key={t}>{t}</option>)}</select>
+          <select value={zone} onChange={(e) => setZone(e.target.value)} className={sel} aria-label="Zone">{ZONES.map((t) => <option key={t}>{t}</option>)}</select>
+          <select value={level} onChange={(e) => setLevel(e.target.value)} className={sel} aria-label="Niveau">{LEVELS.map((t) => <option key={t}>{t}</option>)}</select>
         </div>
       </section>
 
-      {/* Liste des offres */}
-      <section className="container-page py-10 md:py-14">
-        {filtered.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-border bg-card py-16 text-center">
-            <p className="text-lg font-semibold text-foreground">Aucune offre ne correspond</p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Essayez une autre zone ou un autre type d'offre.
-            </p>
-          </div>
+      <section className="container-page py-10">
+        <p className="mb-5 text-sm text-muted-foreground">{list.length} opportunité{list.length > 1 ? "s" : ""}</p>
+        {list.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-border bg-card py-16 text-center text-muted-foreground">Aucune offre ne correspond à ces filtres.</div>
         ) : (
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((offer) => (
-              <article
-                key={offer.title}
-                className="flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/10"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <span
-                    className={
-                      offer.type === "Stage"
-                        ? "rounded-full bg-primary-soft px-3 py-1 text-xs font-semibold text-primary"
-                        : "rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground"
-                    }
-                  >
-                    {offer.type}
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-certified-soft px-3 py-1 text-xs font-bold text-certified">
-                    <span aria-hidden>✓</span> Offre Vérifiée IA
-                  </span>
-                </div>
-                <h2 className="mt-4 text-lg font-bold leading-snug text-foreground">
-                  {offer.title}
-                </h2>
-                <p className="mt-1.5 text-sm font-medium text-muted-foreground">{offer.company}</p>
-                <dl className="mt-5 space-y-2.5 text-sm">
-                  <div className="flex items-center justify-between gap-3">
-                    <dt className="text-muted-foreground">📍 Zone</dt>
-                    <dd className="font-semibold text-foreground">{offer.zone}</dd>
-                  </div>
-                  <div className="flex items-center justify-between gap-3">
-                    <dt className="text-muted-foreground">
-                      {offer.type === "Stage" ? "💰 Gratification" : "💰 Prix"}
-                    </dt>
-                    <dd className="font-semibold text-foreground">{offer.compensation}</dd>
-                  </div>
-                  <div className="flex items-center justify-between gap-3">
-                    <dt className="text-muted-foreground">🛡️ Statut</dt>
-                    <dd className="font-semibold text-certified">{offer.status}</dd>
-                  </div>
-                </dl>
-              </article>
-            ))}
+            {list.map((o) => <OfferCard key={o.id} offer={o} action="Postuler directement" onAction={() => setApplying(o)} />)}
           </div>
         )}
       </section>
+      <ApplyDialog offer={applying} onClose={() => setApplying(null)} />
     </div>
   );
 }

@@ -10,17 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ContactRouteImport } from './routes/contact'
+import { Route as EspaceRouteImport } from './routes/espace'
 import { Route as OffresRouteImport } from './routes/offres'
+import { Route as TransparenceRouteImport } from './routes/transparence'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
+const EspaceRoute = EspaceRouteImport.update({
+  id: '/espace',
+  path: '/espace',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OffresRoute = OffresRouteImport.update({
@@ -28,35 +29,44 @@ const OffresRoute = OffresRouteImport.update({
   path: '/offres',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TransparenceRoute = TransparenceRouteImport.update({
+  id: '/transparence',
+  path: '/transparence',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/contact': typeof ContactRoute
+  '/espace': typeof EspaceRoute
   '/offres': typeof OffresRoute
+  '/transparence': typeof TransparenceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/contact': typeof ContactRoute
+  '/espace': typeof EspaceRoute
   '/offres': typeof OffresRoute
+  '/transparence': typeof TransparenceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/contact': typeof ContactRoute
+  '/espace': typeof EspaceRoute
   '/offres': typeof OffresRoute
+  '/transparence': typeof TransparenceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/contact' | '/offres'
+  fullPaths: '/' | '/espace' | '/offres' | '/transparence'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/contact' | '/offres'
-  id: '__root__' | '/' | '/contact' | '/offres'
+  to: '/' | '/espace' | '/offres' | '/transparence'
+  id: '__root__' | '/' | '/espace' | '/offres' | '/transparence'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ContactRoute: typeof ContactRoute
+  EspaceRoute: typeof EspaceRoute
   OffresRoute: typeof OffresRoute
+  TransparenceRoute: typeof TransparenceRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -68,11 +78,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
+    '/espace': {
+      id: '/espace'
+      path: '/espace'
+      fullPath: '/espace'
+      preLoaderRoute: typeof EspaceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/offres': {
@@ -82,13 +92,21 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OffresRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/transparence': {
+      id: '/transparence'
+      path: '/transparence'
+      fullPath: '/transparence'
+      preLoaderRoute: typeof TransparenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ContactRoute: ContactRoute,
+  EspaceRoute: EspaceRoute,
   OffresRoute: OffresRoute,
+  TransparenceRoute: TransparenceRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

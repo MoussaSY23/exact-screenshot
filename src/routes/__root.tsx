@@ -13,6 +13,9 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AssistantSolusenIA } from "../components/AssistantSolusenIA";
+import { SiteHeader } from "../components/SiteHeader";
+import { SiteFooter } from "../components/SiteFooter";
+import { AuthProvider } from "../lib/auth";
 
 function NotFoundComponent() {
   return (
@@ -74,99 +77,6 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
   );
 }
 
-const navLinks = [
-  { to: "/", label: "Accueil" },
-  { to: "/offres", label: "Offres" },
-  { to: "/contact", label: "Contact" },
-] as const;
-
-function Header() {
-  return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur-md">
-      <div className="container-page flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-lg shadow-sm">
-            🎓
-          </span>
-          <span className="font-display text-lg font-bold tracking-tight text-foreground">
-            Solusen
-          </span>
-        </Link>
-        <nav className="flex items-center gap-1 sm:gap-2">
-          {navLinks.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-              activeProps={{ className: "bg-primary-soft text-primary font-semibold" }}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-      </div>
-    </header>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="border-t border-border bg-secondary/60">
-      <div className="container-page grid gap-10 py-12 md:grid-cols-3">
-        <div>
-          <div className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-lg">
-              🎓
-            </span>
-            <span className="font-display text-lg font-bold">Solusen</span>
-          </div>
-          <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
-            La plateforme d'insertion professionnelle centralisée pour les étudiants et jeunes
-            diplômés de Dakar. Des offres vérifiées, sans arnaque, sans « bras long ».
-          </p>
-        </div>
-        <div>
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
-            Navigation
-          </h3>
-          <ul className="mt-4 space-y-2.5 text-sm">
-            {navLinks.map((link) => (
-              <li key={link.to}>
-                <Link
-                  to={link.to}
-                  className="text-muted-foreground transition-colors hover:text-primary"
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
-            Contact
-          </h3>
-          <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
-            <li>Swiss UMEF University Dakar, Sénégal</li>
-            <li>
-              <a href="mailto:contact@solusen.sn" className="transition-colors hover:text-primary">
-                contact@solusen.sn
-              </a>
-            </li>
-            <li>+221 33 800 00 00</li>
-          </ul>
-        </div>
-      </div>
-      <div className="border-t border-border">
-        <div className="container-page flex flex-col gap-2 py-5 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between">
-          <p>© {new Date().getFullYear()} Solusen — Tous droits réservés.</p>
-          <p>Mentions légales · Politique de confidentialité · Campus Swiss UMEF Dakar</p>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
@@ -182,7 +92,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap",
       },
     ],
   }),
@@ -211,14 +121,16 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <AuthProvider>
       <div className="flex min-h-screen flex-col">
-        <Header />
+        <SiteHeader />
         <main className="flex-1 pt-16">
           <Outlet />
         </main>
-        <Footer />
+        <SiteFooter />
         <AssistantSolusenIA />
       </div>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
