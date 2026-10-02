@@ -14,6 +14,8 @@ export const Route = createFileRoute("/espace")({
       { name: "description", content: "Suivez vos candidatures, complétez votre profil et recevez des recommandations IA sur-mesure." },
       { property: "og:title", content: "Mon Espace candidat — Solusen" },
       { property: "og:description", content: "Le tableau de bord de l'étudiant Solusen : compétences, candidatures et recommandations." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Espace,
