@@ -16,6 +16,7 @@ export function AssistantSolusenIA() {
     setResponse("");
 
     try {
+      console.log("Envoi de la requête à Dify API...");
       const res = await fetch("https://api.dify.ai/v1/workflows/run", {
         method: "POST",
         headers: {
@@ -29,18 +30,24 @@ export function AssistantSolusenIA() {
         }),
       });
 
+      console.log("Status de la réponse:", res.status, res.statusText);
+
       if (!res.ok) {
-        throw new Error(`Erreur API: ${res.status}`);
+        const errorText = await res.text();
+        console.error("Erreur API response:", errorText);
+        throw new Error(`Erreur API ${res.status}: ${errorText}`);
       }
 
       const data = await res.json();
+      console.log("Données reçues de Dify:", data);
       
       // Extraction de la réponse selon la structure Dify
-      const answer = data.outputs?.text || data.outputs?.answer || data.data?.outputs?.text || JSON.stringify(data);
+      const answer = data.outputs?.text || data.outputs?.answer || data.data?.outputs?.text || data.data?.outputs?.result || JSON.stringify(data, null, 2);
       setResponse(answer);
     } catch (err) {
-      setError("Une erreur est survenue lors de la communication avec l'assistant. Veuillez réessayer.");
-      console.error("Erreur Dify:", err);
+      const errorMessage = err instanceof Error ? err.message : "Erreur inconnue";
+      console.error("Erreur Dify complète:", err);
+      setError(`Erreur: ${errorMessage}`);
     } finally {
       setIsLoading(false);
     }
