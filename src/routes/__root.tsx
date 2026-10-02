@@ -16,6 +16,7 @@ import { AssistantSolusenIA } from "../components/AssistantSolusenIA";
 import { SiteHeader } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
 import { AuthProvider } from "../lib/auth";
+import { FavoritesProvider } from "../lib/favorites";
 
 function NotFoundComponent() {
   return (
@@ -93,7 +94,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap",
       },
     ],
   }),
@@ -123,6 +124,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
+      <FavoritesProvider>
       <div className="flex min-h-screen flex-col">
         <SiteHeader />
         <main className="flex-1 pt-16">
@@ -131,6 +133,7 @@ function RootComponent() {
         <SiteFooter />
         <AssistantSolusenIA />
       </div>
+      </FavoritesProvider>
       </AuthProvider>
     </QueryClientProvider>
   );
